@@ -1,0 +1,152 @@
+{% extends 'base.html' %} {% block content %}
+<body class="search-bg">
+  <header class="search-header">
+    <div class="search-nav">
+      <a href="{{ url_for('home') }}" role="button">HOME</a>
+      <a href="{{ url_for('search') }}" role="button">CAFES</a>
+      <a href="{{ url_for('about') }}" role="button">ABOUT</a>
+      <a href="{{ url_for('about') }}" role="button">SIGN IN/UP</a>
+      <a href="{{ url_for('about') }}" role="button">SIGN OUT</a>
+    </div>
+  </header>
+  <div class="search-forms">
+    <div class="left-form">
+      <form>
+        <label for="cafe-name">
+          Search Cafe by Name
+        </label>
+        <input
+          type="text"
+          name="cafe-name"
+          placeholder="Type cafe name..."
+        />
+        <input type="button" value="Search"/>
+      </form>
+
+
+
+
+
+
+    </div>
+    <div style="position:absolute; right: 25%">
+      <form method="post" class="search-form dongle-font">
+        <!-- City Selection -->
+        <label>City:</label><br />
+        <input type="radio" name="city" value="Istanbul" /> Istanbul
+        <input type="radio" name="city" value="Ankara" /> Ankara
+        <input type="radio" name="city" value="Izmir" /> Izmir
+
+        <br /><br />
+
+        <!-- District Dropdown -->
+        <label>District:</label>
+        <select name="district" id="district">
+          <option value="">-- Select City First --</option>
+        </select>
+
+        <br /><br />
+
+        <!-- Neighborhood Dropdown -->
+        <label>Neighborhood:</label>
+        <select name="neighborhood" id="neighborhood">
+          <option value="">-- Select District First --</option>
+        </select>
+
+        <br /><br />
+
+        <!-- Search Button -->
+        <input
+          type="submit"
+          value="Search"
+          style="
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+          "
+        />
+      </form>
+    </div>
+
+    <script>
+      // City → Districts → Neighborhoods data
+      const data = {
+        Istanbul: {
+          Kadıköy: ["Moda", "Fenerbahçe", "Suadiye"],
+          Beşiktaş: ["Levent", "Etiler", "Ortaköy"],
+        },
+        Ankara: {
+          Çankaya: ["Kızılay", "Ayrancı", "GOP"],
+          Keçiören: ["Etlik", "Bağlum", "Ufuktepe"],
+        },
+        Izmir: {
+          Konak: ["Alsancak", "Karataş", "Kemeraltı"],
+          Bornova: ["Evka 3", "Küçükpark", "Kazımdirik"],
+        },
+      };
+
+      const cityRadios = document.querySelectorAll('input[name="city"]');
+      const districtSelect = document.getElementById("district");
+      const neighborhoodSelect = document.getElementById("neighborhood");
+
+      // When a city is selected
+      cityRadios.forEach((radio) => {
+        radio.addEventListener("change", () => {
+          const city = radio.value;
+
+          // Clear previous options
+          districtSelect.innerHTML =
+            '<option value="">-- Select District --</option>';
+          neighborhoodSelect.innerHTML =
+            '<option value="">-- Select District First --</option>';
+
+          // Populate new districts
+          for (const district in data[city]) {
+            const option = document.createElement("option");
+            option.value = district;
+            option.textContent = district;
+            districtSelect.appendChild(option);
+          }
+        });
+      });
+
+      // When a district is selected
+      districtSelect.addEventListener("change", () => {
+        const city = document.querySelector(
+          'input[name="city"]:checked'
+        )?.value;
+        const district = districtSelect.value;
+
+        // Clear previous options
+        neighborhoodSelect.innerHTML =
+          '<option value="">-- Select Neighborhood --</option>';
+
+        if (city && district) {
+          const neighborhoods = data[city][district];
+          neighborhoods.forEach((n) => {
+            const option = document.createElement("option");
+            option.value = n;
+            option.textContent = n;
+            neighborhoodSelect.appendChild(option);
+          });
+        }
+      });
+    </script>
+
+    <!-- <div class="row">
+      <div class="col-12" style="text-align: center">
+        <form>
+          <label for="order_by">Order By:</label>
+          <select name="order_by">
+            <option value="latest">Distance</option>
+          </select>
+        </form>
+      </div>
+    </div> -->
+  </div>
+</body>
+
+{% endblock %}

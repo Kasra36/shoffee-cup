@@ -1,0 +1,242 @@
+.home-bg {
+  background-image: url("../assets/home-bg.jpeg");
+  background-color: #b27d4d;
+  background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.home-tilte-container {
+  position: absolute;
+  left: 24%;
+  top: 17%;
+  float: center;
+  width: 400px;
+  height: 400px;
+  margin: auto;
+  color: #5a2d04;
+  font-size: 58px;
+}
+
+.home-nav {
+  text-align: start;
+  position: relative;
+  padding-left: 320px;
+  padding-top: 5px;
+}
+
+.home-sign {
+  text-align: end;
+  position: relative;
+  padding-right: 30px;
+  padding-top: 5px;
+}
+
+.home-nav .btn,
+.home-sign .btn {
+  color: #5a2d04;
+}
+
+.home-nav .btn:hover,
+.home-sign .btn:hover {
+  color: #b37429;
+}
+
+.bean-button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.wheel-container {
+  position: absolute;
+  right: 13%;
+  top: 11%;
+  float: right;
+  width: 400px;
+  height: 400px;
+  margin: auto;
+}
+
+.center-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 150px;
+  transform: translate(-50%, -50%);
+  animation: spinImage 12s linear infinite;
+}
+
+.rotating-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 400px;
+  transform-origin: 50% 50%;
+  animation: spinText 20s linear infinite;
+}
+
+@keyframes spinImage {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes spinText {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.about-bg-top {
+  background-image: url("../assets/about-bg-top.png");
+  background-size: cover;
+  background-position: top center;
+  height: 260px;
+}
+
+.about-bg-bot {
+  background-image: url("../assets/about-bg-bot.png");
+  background-size: cover;
+  background-position: bottom center;
+  height: 290px;
+}
+
+.about-text {
+  position: relative;
+  top: -90px;
+  color: #b27d4d;
+  font-size: 32px;
+  margin: 0 auto;
+  width: 80%;
+  line-height: 1;
+}
+
+.search-bg {
+  background-image: url("../assets/search-bg.jpeg");
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.search-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 0;
+}
+
+.search-bg * {
+  position: relative;
+  z-index: 1;
+}
+
+.search-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 106, 0, 0.3);
+  margin-top: 20px;
+  height: 30px;
+  margin-bottom: 20px;
+}
+
+.search-nav {
+  display: flex;
+  text-align: center;
+  position: absolute;
+  font-size: 32px;
+  
+}
+
+.search-nav a {
+  text-decoration: none;
+  padding: 10px;
+  padding-top: 15px;
+  color: whitesmoke;
+  font-weight: bold;
+}
+
+.search-nav .btn {
+  color: white;
+}
+
+.search-forms {
+  display: flex;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.3);
+  font-size: 28px;
+  height: 40vh
+}
+
+.left-form {
+  color: whitesmoke;
+  position: absolute;
+  left: 15%;
+  text-align: center;
+}
+
+.left-form form label,
+.left-form form input {
+  display: block;
+  width: 80%;       /* optional: make inputs wider */
+  margin: 10px auto; /* adds vertical spacing and centers horizontally */
+}
+
+
+.search-result-table {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  min-height: 100vh;
+  padding-right: 130px;
+  padding-left: 130px;
+}
+
+.bedfort-font {
+  font-family: "Mr Bedfort", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.dongle-font {
+  font-family: "Dongle", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+form input,
+label,
+textarea {
+  margin: 5px;
+}
+
+option {
+  text-transform: capitalize;
+}
+
+.left-form, .search-header {
+  font-family: "Dongle", sans-serif;
+}
+
+.color-selection {
+  color: #b27d4d;
+  color: #c29770;
+  color: #b2b04d;
+  color: #4d82b2;
+  color: #b24d4f;
+  color: #5a2d04;
+}
