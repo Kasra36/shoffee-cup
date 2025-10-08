@@ -11,64 +11,73 @@
   </header>
   <div class="search-forms">
     <div class="left-form">
-      <form>
-        <label for="cafe-name">
-          Search Cafe by Name
-        </label>
-        <input
-          type="text"
-          name="cafe-name"
-          placeholder="Type cafe name..."
-        />
-        <input type="button" value="Search"/>
+      <form method="post">
+        <label for="cafe-name"> Search Cafe by Name </label>
+        <br /><br />
+        <input type="search" name="cafe-name" placeholder="Type cafe name..." />
+        <br /><br />
+        <input type="submit" value="Search" class="search-button-left" />
       </form>
-
-
-
-
-
-
     </div>
-    <div style="position:absolute; right: 25%">
-      <form method="post" class="search-form dongle-font">
-        <!-- City Selection -->
-        <label>City:</label><br />
-        <input type="radio" name="city" value="Istanbul" /> Istanbul
-        <input type="radio" name="city" value="Ankara" /> Ankara
-        <input type="radio" name="city" value="Izmir" /> Izmir
+    <div class="right-form">
+      <form method="post">
+        <label style="font-size: 48px; padding-left: 5%;">
+          Search Cafe by Location</label
+        >
+        <table>
+          <tr>
+            <td>
+              <label>Country:</label>
+            </td>
+            <td>
+              <select name="country" id="country">
+                <option value="">Select</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>City:</label>
+            </td>
 
-        <br /><br />
+            <td>
+              <select name="city" id="city">
+                <option value="">Select</option>
+              </select>
+            </td>
+          </tr>
 
-        <!-- District Dropdown -->
-        <label>District:</label>
-        <select name="district" id="district">
-          <option value="">-- Select City First --</option>
-        </select>
+          <tr>
+            <td>
+              <label>District:</label>
+            </td>
 
-        <br /><br />
+            <td>
+              <select name="district" id="district">
+                <option value="">Select</option>
+              </select>
+            </td>
+          </tr>
 
-        <!-- Neighborhood Dropdown -->
-        <label>Neighborhood:</label>
-        <select name="neighborhood" id="neighborhood">
-          <option value="">-- Select District First --</option>
-        </select>
-
-        <br /><br />
-
-        <!-- Search Button -->
-        <input
-          type="submit"
-          value="Search"
-          style="
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 5px;
-            cursor: pointer;
-          "
-        />
+          <tr>
+            <td>
+              <label>Neighborhood:</label>
+            </td>
+            <td>
+              <select name="neighborhood" id="neighborhood">
+                <option value="">Select</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+        <input type="submit" value="Search" class="search-button-right" />
       </form>
+    </div>
+    <div class="search-map">
+      <div>Search on Map</div>
+      <div>
+        <a href="https://www.google.com/maps/" target="_blank"><img src="{{ url_for('static', filename='/assets/search-map.svg') }}" alt="the earth"></a>
+      </div>
     </div>
 
     <script>
