@@ -19,16 +19,18 @@
       <tr>
         <th scope="col">Name</th>
         <th scope="col">Rate</th>
-        <th scope="col">Sections</th>
+        <th scope="col">Distance</th>
+        <th scope="col">Address</th>
         <th scope="col">Location</th>
       </tr>
     </thead>
     <tbody>
       {% for cafe in cafes %}
       <tr>
-        <th scope="row">{{ cafe.properties.name or "Unnamed Café" }}</th>
+        <th scope="row">{{ cafe.properties.name or "N/A" }}</th>
         <td></td>
-        <td></td>
+        <th scope="row">{{ cafe.properties.distance or "N/A" }} meters</th>
+        <th scope="row">{{ cafe.properties.street or "N/A" }}</th>
         <td>
           {% set lon = cafe.geometry.coordinates[0] %} {% set lat =
           cafe.geometry.coordinates[1] %}

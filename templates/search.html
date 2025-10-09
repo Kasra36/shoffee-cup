@@ -11,26 +11,29 @@
   </header>
   <div class="search-forms">
     <div class="left-form">
-      <form method="post">
+      <form method="post" action="{{ url_for('search_name')}}">
         <label for="cafe-name"> Search Cafe by Name </label>
         <br /><br />
-        <input type="search" name="cafe-name" placeholder="Type cafe name..." />
+        <input
+          type="search"
+          name="cafe-name"
+          placeholder="Type cafe name..."
+          required
+        />
         <br /><br />
         <input type="submit" value="Search" class="search-button-left" />
       </form>
     </div>
     <div class="right-form">
       <form method="post">
-        <label style="font-size: 48px; padding-left: 5%;">
-          Search Cafe by Location</label
-        >
+        <label> Search Cafe by Location</label>
         <table>
           <tr>
             <td>
               <label>Country:</label>
             </td>
             <td>
-              <select name="country" id="country">
+              <select name="country" id="country" required>
                 <option value="">Select</option>
               </select>
             </td>
@@ -41,12 +44,11 @@
             </td>
 
             <td>
-              <select name="city" id="city">
+              <select name="city" id="city" required>
                 <option value="">Select</option>
               </select>
             </td>
           </tr>
-
           <tr>
             <td>
               <label>District:</label>
@@ -58,17 +60,6 @@
               </select>
             </td>
           </tr>
-
-          <tr>
-            <td>
-              <label>Neighborhood:</label>
-            </td>
-            <td>
-              <select name="neighborhood" id="neighborhood">
-                <option value="">Select</option>
-              </select>
-            </td>
-          </tr>
         </table>
         <input type="submit" value="Search" class="search-button-right" />
       </form>
@@ -76,73 +67,75 @@
     <div class="search-map">
       <div>Search on Map</div>
       <div>
-        <a href="https://www.google.com/maps/" target="_blank"><img src="{{ url_for('static', filename='/assets/search-map.svg') }}" alt="the earth"></a>
+        <a href="https://www.google.com/maps/" target="_blank"
+          ><img
+            src="{{ url_for('static', filename='/assets/search-map.svg') }}"
+            alt="the earth"
+        /></a>
       </div>
     </div>
 
     <script>
-      // City → Districts → Neighborhoods data
-      const data = {
-        Istanbul: {
-          Kadıköy: ["Moda", "Fenerbahçe", "Suadiye"],
-          Beşiktaş: ["Levent", "Etiler", "Ortaköy"],
-        },
-        Ankara: {
-          Çankaya: ["Kızılay", "Ayrancı", "GOP"],
-          Keçiören: ["Etlik", "Bağlum", "Ufuktepe"],
-        },
-        Izmir: {
-          Konak: ["Alsancak", "Karataş", "Kemeraltı"],
-          Bornova: ["Evka 3", "Küçükpark", "Kazımdirik"],
-        },
-      };
-
-      const cityRadios = document.querySelectorAll('input[name="city"]');
+      const countrySelect = document.getElementById("country");
+      const citySelect = document.getElementById("city");
       const districtSelect = document.getElementById("district");
-      const neighborhoodSelect = document.getElementById("neighborhood");
 
-      // When a city is selected
-      cityRadios.forEach((radio) => {
-        radio.addEventListener("change", () => {
-          const city = radio.value;
-
-          // Clear previous options
-          districtSelect.innerHTML =
-            '<option value="">-- Select District --</option>';
-          neighborhoodSelect.innerHTML =
-            '<option value="">-- Select District First --</option>';
-
-          // Populate new districts
-          for (const district in data[city]) {
+      // Fetch the JSON
+      fetch("/static/cities.json")
+        .then((res) => res.json())
+        .then((data) => {
+          // Populate country dropdown
+          Object.keys(data).forEach((country) => {
             const option = document.createElement("option");
-            option.value = district;
-            option.textContent = district;
-            districtSelect.appendChild(option);
-          }
-        });
-      });
-
-      // When a district is selected
-      districtSelect.addEventListener("change", () => {
-        const city = document.querySelector(
-          'input[name="city"]:checked'
-        )?.value;
-        const district = districtSelect.value;
-
-        // Clear previous options
-        neighborhoodSelect.innerHTML =
-          '<option value="">-- Select Neighborhood --</option>';
-
-        if (city && district) {
-          const neighborhoods = data[city][district];
-          neighborhoods.forEach((n) => {
-            const option = document.createElement("option");
-            option.value = n;
-            option.textContent = n;
-            neighborhoodSelect.appendChild(option);
+            option.value = country;
+            option.textContent = country;
+            countrySelect.appendChild(option);
           });
-        }
-      });
+
+          // When a country is selected
+          countrySelect.addEventListener("change", () => {
+            const cities = data[countrySelect.value] || [];
+            citySelect.innerHTML = '<option value="">Select a city</option>';
+            districtSelect.innerHTML =
+              '<option value="">Select a district</option>'; // reset districts
+
+            if (Array.isArray(cities)) {
+              // For countries where cities are just a flat array
+              cities.forEach((city) => {
+                const option = document.createElement("option");
+                option.value = city;
+                option.textContent = city;
+                citySelect.appendChild(option);
+              });
+            } else {
+              // For countries where cities have nested districts
+              Object.keys(cities).forEach((city) => {
+                const option = document.createElement("option");
+                option.value = city;
+                option.textContent = city;
+                citySelect.appendChild(option);
+              });
+            }
+          });
+
+          // When a city is selected
+          citySelect.addEventListener("change", () => {
+            const country = countrySelect.value;
+            const city = citySelect.value;
+            const districts =
+              data[country] && data[country][city] ? data[country][city] : [];
+            districtSelect.innerHTML =
+              '<option value="">Select a district</option>';
+
+            districts.forEach((district) => {
+              const option = document.createElement("option");
+              option.value = district;
+              option.textContent = district;
+              districtSelect.appendChild(option);
+            });
+          });
+        })
+        .catch((err) => console.error("Error loading cities.json:", err));
     </script>
 
     <!-- <div class="row">

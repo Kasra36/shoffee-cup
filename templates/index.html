@@ -1,30 +1,29 @@
 {% extends 'base.html' %} {% block content %}
+
 <body class="home-bg">
-  <header class="d-flex justify-content-between align-items-center p-3">
-    <div class="home-nav d-flex">
-      <a href="{{ url_for('home') }}" role="button" class="btn">HOME</a>
-      <a href="{{ url_for('search') }}" role="button" class="btn">CAFES</a>
-      <a href="{{ url_for('about') }}" role="button" class="btn">ABOUT</a>
+  <header class="home-header">
+    <div class="home-nav">
+      <a href="{{ url_for('home') }}" role="button">HOME</a>
+      <a href="{{ url_for('search') }}" role="button">CAFES</a>
+      <a href="{{ url_for('about') }}" role="button">ABOUT</a>
     </div>
-    <div class="home-sign d-flex">
-      <a href="{{ url_for('about') }}" role="button" class="btn">SIGN IN/UP</a>
-      <a href="{{ url_for('about') }}" role="button" class="btn">SIGN OUT</a>
+    <div class="home-sign">
+      <a href="{{ url_for('about') }}" role="button">SIGN IN/UP</a>
+      <a href="{{ url_for('about') }}" role="button">SIGN OUT</a>
     </div>
   </header>
-  <div class="home-tilte-container bedfort-font">
-    <text>
+  <p class="home-tilte-container bedfort-font">
+    <span>
       Grab a cup of<br />
-      <text style="font-size: 160px; padding-left: 25%">coffee?</text>
-    </text>
-  </div>
+      <span class="coffee-styling">coffee?</span>
+    </span>
+  </p>
   <div class="wheel-container">
     <form
       id="nearestForm"
       method="POST"
-      action="{{ url_for('search_result') }}"
+      action="{{ url_for('search_nearest') }}"
     >
-      <input type="hidden" name="lat" id="lat" />
-      <input type="hidden" name="lon" id="lon" />
       <button type="submit" class="bean-button" onclick="setCoordinates(event)">
         <img
           src="{{ url_for('static', filename='assets/Coffee-bean.png') }}"
@@ -56,27 +55,31 @@
   </div>
 
   <script>
-    function setCoordinates(event) {
-      event.preventDefault();
-
+    window.onload = function () {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           function (position) {
-            document.getElementById("lat").value = position.coords.latitude;
-            document.getElementById("lon").value = position.coords.longitude;
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
 
-            document.getElementById("nearestForm").submit();
+            fetch("{{ url_for('save_location') }}", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ lat: lat, lon: lon }),
+            }).then((response) => {
+              console.log("Location saved to session");
+            });
           },
           function (error) {
-            alert(
-              "Unable to retrieve your location. Please allow location access."
-            );
+            console.warn("Location access denied or failed:", error);
           }
         );
       } else {
-        alert("Geolocation is not supported by this browser.");
+        console.warn("Geolocation not supported by this browser.");
       }
-    }
+    };
   </script>
 </body>
 
