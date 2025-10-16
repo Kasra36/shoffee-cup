@@ -1,28 +1,26 @@
 .home-bg {
-  background-image: url("../assets/home-bg.jpeg");
-  background-color: #b27d4d;
-  background-size: contain;
-  background-position: right;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr;
+  height: 100vh;
+  background: url("../assets/home-bg.jpeg") left center / 75% 100% no-repeat,
+    #f9f5ef;
+  background-position: -25px;
+  background-color: #430d01;
 }
 
 .home-header {
   display: flex;
   justify-content: space-between;
-  margin-top: 8px;
+  width: 100%;
 }
 
 .home-nav {
-  margin-left: 22%;
+  padding: 1% 30%;
 }
 
-.home-sign {
-  margin-right: 4%;
-}
-
-.home-nav a, .home-sign a {
-  padding: 0 7px;
+.home-nav a {
+  padding: 15px 7px;
   font-family: "Dongle", sans-serif;
   font-size: 32px;
   text-decoration: none;
@@ -30,60 +28,51 @@
   color: #5a2d04;
 }
 
-.home-nav :hover,
-.home-sign :hover {
+.home-nav :hover {
   color: #b37429;
+}
+
+.main-home {
+  width: 100%;
+  height: auto;
 }
 
 .home-tilte-container {
   display: flex;
   justify-content: start;
+  align-items: center;
+  flex-direction: column;
   color: #5a2d04;
-  font-size: 58px;
-  text-align: center;
-  padding: 3% 25%;
+  padding: 2% 0;
 }
 
-.coffee-styling {
+.styling1 {
+  font-size: 58px;
+  font-family: "Mr Bedfort", cursive;
+  width: 80%;
+}
+
+.styling2 {
   font-size: 160px;
   padding-left: 25%;
 }
 
-.wheel-container {
-  position: absolute;
-  right: 13%;
-  top: 11%;
-  float: right;
-  width: 400px;
-  height: 400px;
-  margin: auto;
-}
-
 .bean-button {
+  display: block;
+  max-width: 50%;
+  height: auto;
   border: none;
   background: none;
-  padding: 0;
   cursor: pointer;
-}
-
-.center-image {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 200px;
-  height: 150px;
-  transform: translate(-50%, -50%);
   animation: spinImage 12s linear infinite;
 }
 
-.rotating-text {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 400px;
-  height: 400px;
-  transform-origin: 50% 50%;
-  animation: spinText 20s linear infinite;
+.bean-form {
+  position: relative;
+  left: 20%;
+  top: 30%;
+  display: flex;
+  justify-content: center;
 }
 
 @keyframes spinImage {
@@ -95,36 +84,72 @@
   }
 }
 
-@keyframes spinText {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.home-right-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -5%;
+}
+
+.logo-img {
+  width: 350px;
+  height: 300px;
+}
+
+
+.about-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #430d01;
+}
+
+.about-nav {
+  justify-content: start;
+  margin-left: 9%;
+}
+
+.about-sign {
+  justify-content: end;
+  align-items: center;
+  margin-right: 9%;
+}
+
+.about-nav a,
+.about-sign a {
+  font-family: "Dongle", sans-serif;
+  color: #b27d4d;
+  font-weight: bold;
+  padding-top: 5%;
+  font-size: 32px;
+}
+
+.about-nav :hover,
+.about-sign :hover {
+  color: whitesmoke;
 }
 
 .about-bg-top {
   background-image: url("../assets/about-bg-top.png");
-  background-size: cover;
+  background-size: contain;
   background-position: top center;
-  height: 260px;
+  height: 200px;
 }
 
 .about-bg-bot {
   background-image: url("../assets/about-bg-bot.png");
-  background-size: cover;
+  background-size: contain;
   background-position: bottom center;
-  height: 290px;
+  height: 200px;
 }
 
 .about-text {
-  position: relative;
-  top: -90px;
+  font-family: "Dongle", sans-serif;
+  justify-content: start;
   color: #b27d4d;
   font-size: 32px;
   margin: 0 auto;
   width: 80%;
+  text-align: justify;
   line-height: 1;
 }
 
@@ -175,6 +200,7 @@
 
 .search-forms {
   display: flex;
+  margin-top: 3%;
   background-color: rgba(255, 255, 255, 0.3);
   color: whitesmoke;
   height: 70vh;
@@ -231,6 +257,13 @@
   border-radius: 5px;
 }
 
+.solo-input {
+  margin-left: 56px;
+  width: 148px;
+  height: 36px;
+  font-size: 28px;
+}
+
 .search-button-right {
   background-color: rgba(255, 106, 0, 0.5);
   color: whitesmoke;
@@ -262,14 +295,73 @@
   font-family: "Dongle", sans-serif;
 }
 
-.search-result-table {
+.sr-bg {
+  background-image: url("../assets/sr-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: auto;
+}
+
+.sr-header {
   display: flex;
   justify-content: center;
-  text-align: center;
+  padding-right: 45%;
+}
+
+.sr-nav a {
+  padding: 0 15px;
+  text-decoration: none;
+  font-family: "Dongle", sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+  color: whitesmoke;
+}
+
+.sr-nav a:hover {
+  color: black;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: yellow;
+}
+
+.sr-content {
+  font-size: 6.5rem;
+}
+
+.sr-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  padding-right: 130px;
-  padding-left: 130px;
+  background-color: rgba(0, 0, 0, 0.4);
+  font-family: "Dongle", sans-serif;
+  font-size: 1.75rem;
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
+  color: whitesmoke;
+}
+.sr-table .table {
+  color: whitesmoke;
+}
+
+.back-home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Dongle", sans-serif;
+  font-size: 2.5rem;
+  margin: 2% auto;
+  width: 80%;
+}
+
+.sr-table .table a,
+.back-home a {
+  color: yellow;
 }
 
 .bedfort-font {
@@ -286,13 +378,4 @@
 
 option {
   text-transform: capitalize;
-}
-
-.color-selection {
-  color: #b27d4d;
-  color: #c29770;
-  color: #b2b04d;
-  color: #4d82b2;
-  color: #b24d4f;
-  color: #5a2d04;
 }

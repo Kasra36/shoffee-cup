@@ -3,21 +3,18 @@
   <header class="search-header">
     <div class="search-nav">
       <a href="{{ url_for('home') }}" role="button">HOME</a>
-      <a href="{{ url_for('search') }}" role="button">CAFES</a>
+      <a href="{{ url_for('search') }}" role="button">SEARCH</a>
       <a href="{{ url_for('about') }}" role="button">ABOUT</a>
-      <a href="{{ url_for('about') }}" role="button">SIGN IN/UP</a>
-      <a href="{{ url_for('about') }}" role="button">SIGN OUT</a>
     </div>
   </header>
   <div class="search-forms">
     <div class="left-form">
-      <form method="post" action="{{ url_for('search_name')}}">
+      <form method="post" action="{{ url_for('search_name') }}">
         <label for="cafe-name"> Search Cafe by Name </label>
         <br /><br />
         <input
           type="search"
           name="cafe-name"
-          placeholder="Type cafe name..."
           required
         />
         <br /><br />
@@ -25,7 +22,7 @@
       </form>
     </div>
     <div class="right-form">
-      <form method="post">
+      <form method="post" action="{{ url_for('search_loc') }}">
         <label> Search Cafe by Location</label>
         <table>
           <tr>
@@ -51,13 +48,16 @@
           </tr>
           <tr>
             <td>
-              <label>District:</label>
+              <label>Street:</label>
             </td>
 
             <td>
-              <select name="district" id="district">
-                <option value="">Select</option>
-              </select>
+              <input
+                class="solo-input"
+                type="search"
+                name="street"
+                required
+              />
             </td>
           </tr>
         </table>
@@ -76,78 +76,42 @@
     </div>
 
     <script>
-      const countrySelect = document.getElementById("country");
-      const citySelect = document.getElementById("city");
-      const districtSelect = document.getElementById("district");
+  const countrySelect = document.getElementById("country");
+  const citySelect = document.getElementById("city");
 
-      // Fetch the JSON
-      fetch("/static/cities.json")
-        .then((res) => res.json())
-        .then((data) => {
-          // Populate country dropdown
-          Object.keys(data).forEach((country) => {
+  fetch("/static/cities.json")
+    .then((res) => res.json())
+    .then((data) => {
+      Object.keys(data).forEach((country) => {
+        const option = document.createElement("option");
+        option.value = country;
+        option.textContent = country;
+        countrySelect.appendChild(option);
+      });
+
+      countrySelect.addEventListener("change", () => {
+        const cities = data[countrySelect.value] || [];
+        citySelect.innerHTML = '<option value="">Select a city</option>';
+
+        if (Array.isArray(cities)) {
+          cities.forEach((city) => {
             const option = document.createElement("option");
-            option.value = country;
-            option.textContent = country;
-            countrySelect.appendChild(option);
+            option.value = city;
+            option.textContent = city;
+            citySelect.appendChild(option);
           });
-
-          // When a country is selected
-          countrySelect.addEventListener("change", () => {
-            const cities = data[countrySelect.value] || [];
-            citySelect.innerHTML = '<option value="">Select a city</option>';
-            districtSelect.innerHTML =
-              '<option value="">Select a district</option>'; // reset districts
-
-            if (Array.isArray(cities)) {
-              // For countries where cities are just a flat array
-              cities.forEach((city) => {
-                const option = document.createElement("option");
-                option.value = city;
-                option.textContent = city;
-                citySelect.appendChild(option);
-              });
-            } else {
-              // For countries where cities have nested districts
-              Object.keys(cities).forEach((city) => {
-                const option = document.createElement("option");
-                option.value = city;
-                option.textContent = city;
-                citySelect.appendChild(option);
-              });
-            }
+        } else {
+          Object.keys(cities).forEach((city) => {
+            const option = document.createElement("option");
+            option.value = city;
+            option.textContent = city;
+            citySelect.appendChild(option);
           });
-
-          // When a city is selected
-          citySelect.addEventListener("change", () => {
-            const country = countrySelect.value;
-            const city = citySelect.value;
-            const districts =
-              data[country] && data[country][city] ? data[country][city] : [];
-            districtSelect.innerHTML =
-              '<option value="">Select a district</option>';
-
-            districts.forEach((district) => {
-              const option = document.createElement("option");
-              option.value = district;
-              option.textContent = district;
-              districtSelect.appendChild(option);
-            });
-          });
-        })
-        .catch((err) => console.error("Error loading cities.json:", err));
-    </script>
-
-    <!-- <div class="row">
-      <div class="col-12" style="text-align: center">
-        <form>
-          <label for="order_by">Order By:</label>
-          <select name="order_by">
-            <option value="latest">Distance</option>
-          </select>
-        </form>
-      </div>
-    </div> -->
+        }
+      });
+    })
+    .catch((err) => console.error("Error loading cities.json:", err));
+</script>
   </div>
 </body>
 

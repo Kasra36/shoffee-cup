@@ -1,86 +1,74 @@
 {% extends 'base.html' %} {% block content %}
 
 <body class="home-bg">
-  <header class="home-header">
+  <header class="row home-header">
     <div class="home-nav">
       <a href="{{ url_for('home') }}" role="button">HOME</a>
-      <a href="{{ url_for('search') }}" role="button">CAFES</a>
+      <a href="{{ url_for('search') }}" role="button">SEARCH</a>
       <a href="{{ url_for('about') }}" role="button">ABOUT</a>
     </div>
-    <div class="home-sign">
-      <a href="{{ url_for('about') }}" role="button">SIGN IN/UP</a>
-      <a href="{{ url_for('about') }}" role="button">SIGN OUT</a>
-    </div>
   </header>
-  <p class="home-tilte-container bedfort-font">
-    <span>
-      Grab a cup of<br />
-      <span class="coffee-styling">coffee?</span>
-    </span>
-  </p>
-  <div class="wheel-container">
-    <form
-      id="nearestForm"
-      method="POST"
-      action="{{ url_for('search_nearest') }}"
-    >
-      <button type="submit" class="bean-button" onclick="setCoordinates(event)">
-        <img
-          src="{{ url_for('static', filename='assets/Coffee-bean.png') }}"
-          alt="Coffee Bean"
-          class="center-image"
-        />
-        <svg class="rotating-text" viewBox="0 0 400 400">
-          <defs>
-            <path id="topHalf" d="M50,200 A150,150 0 0,1 350,200" />
-            <path id="botHalf" d="M350,200 A150,150 0 0,1 50,200" />
-          </defs>
+  <main class="row main-home">
+    <div class="col-4 home-tilte-container">
+      <p class="styling1">
+        Grab a cup of <span class="styling2">coffee?</span>
+      </p>
+    </div>
+    <div class="col-5">
+      <form
+        id="nearestForm"
+        method="POST"
+        action="{{ url_for('search_nearest') }}"
+        class="bean-form"
+      >
+        <button
+          type="submit"
+          class="bean-button"
+          onclick="setCoordinates(event)"
+        >
+          <img
+            src="{{ url_for('static', filename='assets/Coffee-bean.png') }}"
+            alt="Coffee Bean"
+          />
+        </button>
+      </form>
+    </div>
+    <div class="col-3 container home-right-container">
+      <img
+        class="logo-img"
+        src="{{ url_for('static', filename='assets/logo.png')}}"
+        alt=""
+      />
+    </div>
 
-          <text
-            class="dongle-font"
-            font-size="30"
-            fill="brown"
-            text-anchor="middle"
-          >
-            <textPath href="#topHalf" startOffset="50%">
-              Click to see the nearest café
-            </textPath>
-            <textPath href="#botHalf" startOffset="50%">
-              Click to see the nearest café
-            </textPath>
-          </text>
-        </svg>
-      </button>
-    </form>
-  </div>
+    <script>
+      window.onload = function () {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              const lat = position.coords.latitude;
+              const lon = position.coords.longitude;
 
-  <script>
-    window.onload = function () {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          function (position) {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-
-            fetch("{{ url_for('save_location') }}", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ lat: lat, lon: lon }),
-            }).then((response) => {
-              console.log("Location saved to session");
-            });
-          },
-          function (error) {
-            console.warn("Location access denied or failed:", error);
-          }
-        );
-      } else {
-        console.warn("Geolocation not supported by this browser.");
-      }
-    };
-  </script>
+              fetch("{{ url_for('save_location') }}", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ lat: lat, lon: lon }),
+              }).then((response) => {
+                console.log("Location saved to session");
+              });
+            },
+            function (error) {
+              console.warn("Location access denied or failed:", error);
+            }
+          );
+        } else {
+          console.warn("Geolocation not supported by this browser.");
+        }
+      };
+    </script>
+  </main>
 </body>
 
 {% endblock %}

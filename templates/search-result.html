@@ -1,55 +1,57 @@
 {% extends 'base.html' %} {% block content %}
-<header class="d-flex justify-content-between align-items-center p-3">
-  <div class="home-nav d-flex">
-    <a href="{{ url_for('home') }}" role="button" class="btn">HOME</a>
-    <a href="{{ url_for('search') }}" role="button" class="btn">CAFES</a>
-    <a href="{{ url_for('about') }}" role="button" class="btn">ABOUT</a>
-  </div>
-  <div class="home-sign d-flex">
-    <a href="{{ url_for('about') }}" role="button" class="btn">SIGN IN/UP</a>
-    <a href="{{ url_for('about') }}" role="button" class="btn">SIGN OUT</a>
-  </div>
-</header>
-<h2>Nearest Cafés</h2>
 
-{% if cafes %}
-<div class="search-result-table">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Rate</th>
-        <th scope="col">Distance</th>
-        <th scope="col">Address</th>
-        <th scope="col">Location</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for cafe in cafes %}
-      <tr>
-        <th scope="row">{{ cafe.properties.name or "N/A" }}</th>
-        <td></td>
-        <th scope="row">{{ cafe.properties.distance or "N/A" }} meters</th>
-        <th scope="row">{{ cafe.properties.street or "N/A" }}</th>
-        <td>
-          {% set lon = cafe.geometry.coordinates[0] %} {% set lat =
-          cafe.geometry.coordinates[1] %}
-          <a
-            href="https://www.google.com/maps?q={{ lat }},{{ lon }}"
-            target="_blank"
-          >
-            View on Map
-          </a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-
-{% else %}
-<p>No cafés found nearby.</p>
-{% endif %}
-
-<a href="{{ url_for('home') }}">Back to Home</a>
+<body class="sr-bg">
+  <header class="sr-header">
+    <div class="sr-nav">
+      <a href="{{ url_for('home') }}" role="button">HOME</a>
+      <a href="{{ url_for('search') }}" role="button">SEARCH</a>
+      <a href="{{ url_for('about') }}" role="button">ABOUT</a>
+    </div>
+  </header>
+  <main>
+    {% if cafes %}
+    <div class="sr-table">
+      <p class="sr-content">Cafés</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Rate</th>
+            <th scope="col">Distance</th>
+            <th scope="col">Address</th>
+            <th scope="col">Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cafe in cafes %}
+          <tr>
+            <th scope="row">{{ cafe.properties.name or "N/A" }}</th>
+            <td></td>
+            <th scope="row">{{ cafe.properties.distance or "N/A" }} meters</th>
+            <th scope="row">{{ cafe.properties.street or "N/A" }}</th>
+            <td>
+              {% set lon = cafe.geometry.coordinates[0] %} {% set lat =
+              cafe.geometry.coordinates[1] %}
+              <a
+                href="https://www.google.com/maps?q={{ lat }},{{ lon }}"
+                target="_blank"
+              >
+                View on Map
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="sr-table">
+      <p class="sr-content">No cafés found nearby.</p>
+    </div>
+    {% endif %}
+    <div class="back-home">
+    <a href="{{ url_for('search') }}">Back to Search</a>
+    </div>
+  </main>
+</body>
 {% endblock %}
