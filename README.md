@@ -1,6 +1,6 @@
 # Shoffee Cup ☕
 
-Shoffee Cup is a user-friendly web platform that helps coffee lovers, students, and remote workers discover the best nearby cafés. Users can find the nearest cafés, browse by city/district/neighborhood, rate them, and view their locations on a map.  
+Shoffee Cup is a user-friendly web platform that helps coffee lovers, students, and remote workers discover the best nearby cafés. Users can find the nearest cafés by clicking a button, browse by city/district/neighborhood, and find their desired café location on map.  
 
 This project is built using **Python (Flask)**, **Bootstrap 5**, and integrates the **Geoapify Places API** for finding cafés.
 
@@ -11,12 +11,7 @@ This project is built using **Python (Flask)**, **Bootstrap 5**, and integrates 
 - [Features](#features)
 - [Demo](#demo)
 - [Technologies](#technologies)
-- [Setup](#setup)
-- [Usage](#usage)
 - [API Integration](#api-integration)
-- [File Structure](#file-structure)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
@@ -33,7 +28,14 @@ This project is built using **Python (Flask)**, **Bootstrap 5**, and integrates 
 
 ## Demo
 
-*(Include screenshots or GIFs here if available)*  
+### Home Page
+![Home Page](assets/home_page.png)
+
+### Search Page
+![Search Page](assets/search_page.png)
+
+### Search-result Page
+![Search-result Page](assets/sr_page.png)
 
 ---
 
@@ -43,6 +45,12 @@ This project is built using **Python (Flask)**, **Bootstrap 5**, and integrates 
 - Flask  
 - Flask-Bootstrap5  
 - HTML, CSS, JS  
-- Geoapify Places API  
+- Geoapify APIs
 
 ---
+
+## API Integration
+
+- Shoffee Cup uses the Geoapify Places API to fetch café data.
+- The API is called with parameters such as user location, category (catering.cafe), and optional filters (name, city, street).
+- API key is stored in the .env file and loaded using python-dotenv.
