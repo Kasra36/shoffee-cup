@@ -29,13 +29,13 @@ This project is built using **Python (Flask)**, **Bootstrap 5**, and integrates 
 ## Demo
 
 ### Home Page
-![Home Page](assets/home_page.png)
+![Home Page](static/assets/home_page.png)
 
 ### Search Page
-![Search Page](assets/search_page.png)
+![Search Page](static/assets/search_page.png)
 
 ### Search-result Page
-![Search-result Page](assets/sr_page.png)
+![Search-result Page](static/assets/sr_page.png)
 
 ---
 
